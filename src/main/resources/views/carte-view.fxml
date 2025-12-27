@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.restaurant.controller.CarteController">
+
+    <top>
+        <VBox spacing="10" style="-fx-padding: 15;">
+            <Label text="📋 Carte - Gestion du Menu"
+                   style="-fx-font-size: 18; -fx-font-weight: bold;" />
+
+            <HBox spacing="20">
+                <Label text="Gestion complète des catégories et plats"
+                       style="-fx-text-fill: #666666;" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Button text="🔄 Rafraîchir" onAction="#handleRefresh" />
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <SplitPane dividerPositions="0.3">
+            <!-- GAUCHE: Catégories -->
+            <VBox spacing="10" style="-fx-padding: 10;">
+                <Label text="📁 Catégories" style="-fx-font-weight: bold; -fx-font-size: 14;" />
+
+                <VBox spacing="5">
+                    <Label text="Nom:" />
+                    <TextField fx:id="nomCategorieField" promptText="Nom de la catégorie" />
+
+                    <Label text="Description:" />
+                    <TextArea fx:id="descCategorieField" promptText="Description (optionnel)"
+                              prefRowCount="3" wrapText="true" />
+                </VBox>
+
+                <HBox spacing="10">
+                    <Button text="➕ Ajouter" onAction="#handleAddCategorie"
+                            style="-fx-background-color: #ccffcc;" />
+                    <Button text="✏️ Modifier" onAction="#handleUpdateCategorie" />
+                    <Button text="🗑️ Supprimer" onAction="#handleDeleteCategorie"
+                            style="-fx-background-color: #ffcccc;" />
+                </HBox>
+
+                <Separator />
+
+                <Label text="Liste des catégories:" />
+                <ListView fx:id="categoriesList" VBox.vgrow="ALWAYS" />
+            </VBox>
+
+            <!-- CENTER: Plats -->
+            <VBox spacing="10" style="-fx-padding: 10;">
+                <Label text="🍽️ Plats" style="-fx-font-weight: bold; -fx-font-size: 14;" />
+
+                <GridPane hgap="10" vgap="10">
+                    <Label text="Nom:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                    <TextField fx:id="nomPlatField" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                               promptText="Nom du plat" prefWidth="200" />
+
+                    <Label text="Prix (€):" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                    <TextField fx:id="prixPlatField" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                               promptText="0.00" prefWidth="100" />
+
+                    <Label text="Catégorie:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                    <ComboBox fx:id="categorieCombo" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                              prefWidth="200" />
+
+                    <Label text="Description:" GridPane.rowIndex="3" GridPane.columnIndex="0"
+                           GridPane.valignment="TOP" />
+                    <TextArea fx:id="descPlatField" GridPane.rowIndex="3" GridPane.columnIndex="1"
+                              promptText="Description du plat" prefRowCount="3" wrapText="true" />
+
+                    <Label text="Image:" GridPane.rowIndex="4" GridPane.columnIndex="0"
+                           GridPane.valignment="TOP" />
+                    <VBox GridPane.rowIndex="4" GridPane.columnIndex="1" spacing="5">
+                        <HBox spacing="10">
+                            <Button fx:id="uploadImageBtn" text="📷 Choisir image"
+                                    onAction="#handleUploadImage" />
+                            <Button text="❌ Supprimer image" />
+                        </HBox>
+                        <ImageView fx:id="platImageView" fitWidth="150" fitHeight="150"
+                                   preserveRatio="true" />
+                    </VBox>
+                </GridPane>
+
+                <HBox spacing="10">
+                    <Button text="➕ Ajouter Plat" onAction="#handleAddPlat"
+                            style="-fx-background-color: #ccffcc;" />
+                    <Button text="✏️ Modifier Plat" onAction="#handleUpdatePlat" />
+                    <Button text="🗑️ Supprimer Plat" onAction="#handleDeletePlat"
+                            style="-fx-background-color: #ffcccc;" />
+                </HBox>
+
+                <Separator />
+
+                <Label text="Plats de la catégorie sélectionnée:" />
+                <ListView fx:id="platsList" VBox.vgrow="ALWAYS" />
+            </VBox>
+        </SplitPane>
+    </center>
+
+    <bottom>
+        <HBox style="-fx-background-color: #f0f0f0; -fx-padding: 10;" spacing="15">
+            <Label text="💡 1. Créez des catégories → 2. Ajoutez des plats avec images → 3. Gestion complète"
+                   style="-fx-text-fill: #666666;" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="statusLabel" text="Prêt" />
+        </HBox>
+    </bottom>
+
+</BorderPane>

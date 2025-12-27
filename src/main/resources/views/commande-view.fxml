@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.restaurant.controller.CommandeController">
+
+    <top>
+        <VBox spacing="10" style="-fx-padding: 10; -fx-border-color: #cccccc; -fx-border-width: 0 0 1 0;">
+            <Label fx:id="commandeLabel" text="Commande #..."
+                   style="-fx-font-size: 16; -fx-font-weight: bold;" />
+            <HBox spacing="20">
+                <Label fx:id="statutLabel" text="Statut: EN_ATTENTE"
+                       style="-fx-font-size: 12; -fx-text-fill: #666666;" />
+                <Label fx:id="totalLabel" text="Total: 0.00€"
+                       style="-fx-font-size: 12; -fx-text-fill: #333333;" />
+                <Label fx:id="totalAvecRemiseLabel" text="À payer: 0.00€"
+                       style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #2196F3;" />
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <SplitPane dividerPositions="0.5">
+            <!-- GAUCHE: Lignes de commande -->
+            <VBox spacing="10" style="-fx-padding: 10;">
+                <Label text="Plats commandés:" style="-fx-font-weight: bold; -fx-font-size: 12;" />
+
+                <ListView fx:id="lignesListView" VBox.vgrow="ALWAYS" style="-fx-control-inner-background: #f9f9f9;" />
+
+                <HBox spacing="5">
+                    <Button text="🗑️ Supprimer" onAction="#handleRemovePlat" style="-fx-padding: 8;" />
+                    <Label text="Nouvelle quantité:" />
+                    <Spinner fx:id="quantiteSpinner" prefWidth="80" />
+                    <Button text="✏️ Modifier" onAction="#handleUpdateQuantite" style="-fx-padding: 8;" />
+                </HBox>
+            </VBox>
+
+            <!-- DROITE: Ajouter plats + Remise -->
+            <VBox spacing="15" style="-fx-padding: 10; -fx-border-color: #f0f0f0; -fx-border-width: 0 0 0 1;">
+                <!-- Sélection plat -->
+                <VBox spacing="5">
+                    <Label text="➕ Ajouter un plat:" style="-fx-font-weight: bold; -fx-font-size: 12;" />
+
+                    <VBox spacing="3">
+                        <Label text="Catégorie:" style="-fx-font-size: 11;" />
+                        <ComboBox fx:id="categorieCombo" prefHeight="30"
+                                  style="-fx-font-size: 11;" />
+                    </VBox>
+
+                    <VBox spacing="3">
+                        <Label text="Plat:" style="-fx-font-size: 11;" />
+                        <ComboBox fx:id="platCombo" prefHeight="30"
+                                  style="-fx-font-size: 11;" />
+                    </VBox>
+
+                    <VBox spacing="3">
+                        <Label text="Quantité:" style="-fx-font-size: 11;" />
+                        <Spinner fx:id="quantiteSpinnerAdd" prefHeight="30" />
+                    </VBox>
+
+                    <Button text="✅ Ajouter à la commande" onAction="#handleAddPlat"
+                            style="-fx-padding: 10; -fx-font-size: 11; -fx-background-color: #4CAF50; -fx-text-fill: white;" />
+                </VBox>
+
+                <!-- Remise -->
+                <Separator />
+
+                <VBox spacing="5">
+                    <Label text="💰 Appliquer remise:" style="-fx-font-weight: bold; -fx-font-size: 12;" />
+
+                    <HBox spacing="5">
+                        <TextField fx:id="remiseField" promptText="Montant remise"
+                                   HBox.hgrow="ALWAYS" />
+                        <Button fx:id="applyDiscountBtn" text="Appliquer" onAction="#handleApplyDiscount"
+                                style="-fx-padding: 5;" />
+                    </HBox>
+                    <Label text="(Max 50% du total)" style="-fx-font-size: 10; -fx-text-fill: #999999;" />
+                </VBox>
+
+                <Region VBox.vgrow="ALWAYS" />
+
+                <!-- Actions -->
+                <VBox spacing="5" style="-fx-padding: 10; -fx-border-color: #f0f0f0; -fx-border-width: 1 0 0 0;">
+                    <Button fx:id="envoyerCuisineBtn" text="👨‍🍳 Envoyer en cuisine"
+                            onAction="#handleEnvoyerCuisine"
+                            style="-fx-padding: 12; -fx-font-size: 12; -fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-weight: bold;" />
+
+                    <Button fx:id="annulerBtn" text="❌ Annuler commande"
+                            onAction="#handleAnnuler"
+                            style="-fx-padding: 12; -fx-font-size: 12; -fx-background-color: #f44336; -fx-text-fill: white;" />
+                </VBox>
+            </VBox>
+        </SplitPane>
+    </center>
+
+    <bottom>
+        <Label text="💡 Sélectionnez une ligne pour modifier la quantité ou supprimer"
+               style="-fx-padding: 8; -fx-background-color: #f0f0f0; -fx-text-fill: #666666; -fx-font-size: 11;" />
+    </bottom>
+
+</BorderPane>

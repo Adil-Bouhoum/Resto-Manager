@@ -1,0 +1,54 @@
+/* Ajoutez à la fin de votre fichier styles.css */
+
+/* ========================================
+   NOUVEAUX STYLES POUR L'INTERFACE
+   ======================================== */
+
+/* Boutons avec icônes */
+.button-icon {
+    -fx-font-size: 14px;
+    -fx-padding: 6px 10px;
+}
+
+/* Cartes de tables */
+.table-card {
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+    -fx-cursor: hand;
+}
+
+.table-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 3);
+}
+
+/* Images des plats */
+.plat-image {
+    -fx-border-color: #ecf0f1;
+    -fx-border-radius: 5;
+    -fx-border-width: 2;
+}
+
+/* Stats labels */
+.stat-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Alerte temps réel (cuisine) */
+.alerte-urgent {
+    -fx-background-color: #fff3cd;
+    -fx-border-color: #ffeaa7;
+    -fx-border-width: 2;
+}
+
+/* Tab spécial (caisse) */
+.tab-paiement {
+    -fx-background-color: #ccffcc;
+}
+
+.tab-rapport {
+    -fx-background-color: #cce5ff;
+}

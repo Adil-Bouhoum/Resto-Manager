@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.restaurant.controller.CuisineController">
+
+    <top>
+        <VBox spacing="10" style="-fx-padding: 15;">
+            <Label text="👨‍🍳 Interface Cuisine"
+                   style="-fx-font-size: 18; -fx-font-weight: bold;" />
+
+            <HBox spacing="20">
+                <VBox spacing="5">
+                    <Label fx:id="statsLabel" text="Chargement..."
+                           style="-fx-font-weight: bold; -fx-font-size: 12;" />
+                    <Label text="Rafraîchissement automatique toutes les 2 secondes"
+                           style="-fx-text-fill: #666666; -fx-font-size: 11;" />
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <Button text="🔄 Rafraîchir" onAction="#handleRefresh" />
+                <Button text="👀 Voir détails" onAction="#handleViewDetails" />
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <!-- ✅ 4 colonnes au lieu de 2 -->
+        <SplitPane dividerPositions="0.25, 0.5, 0.75">
+
+            <!-- COLONNE 1: Commandes en attente -->
+            <VBox spacing="10" style="-fx-padding: 10;">
+                <HBox spacing="10">
+                    <Label text="⏳ En Attente"
+                           style="-fx-font-weight: bold; -fx-font-size: 12;" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button text="➡️" onAction="#handleSendToPreparation"
+                            style="-fx-font-size: 10; -fx-padding: 5;" />
+                </HBox>
+
+                <TableView fx:id="attenteTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn text="ID" prefWidth="40" />
+                        <TableColumn text="Table" prefWidth="50" />
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
+
+            <!-- COLONNE 2: Commandes en préparation -->
+            <VBox spacing="10" style="-fx-padding: 10;">
+                <HBox spacing="10">
+                    <Label text="🔥 En Préparation"
+                           style="-fx-font-weight: bold; -fx-font-size: 12;" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button text="✅" onAction="#handleMarkReady"
+                            style="-fx-font-size: 10; -fx-padding: 5;" />
+                </HBox>
+
+                <TableView fx:id="preparationTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn text="ID" prefWidth="40" />
+                        <TableColumn text="Table" prefWidth="50" />
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
+
+            <!-- ✅ COLONNE 3: Commandes prêtes -->
+            <VBox spacing="10" style="-fx-padding: 10;">
+                <HBox spacing="10">
+                    <Label text="✅ Prêt"
+                           style="-fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #00aa00;" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button text="🍽️" onAction="#handleMarkServed"
+                            style="-fx-font-size: 10; -fx-padding: 5;" />
+                </HBox>
+
+                <TableView fx:id="pretTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn text="ID" prefWidth="40" />
+                        <TableColumn text="Table" prefWidth="50" />
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
+
+            <!-- ✅ COLONNE 4: Commandes servies -->
+            <VBox spacing="10" style="-fx-padding: 10;">
+                <HBox spacing="10">
+                    <Label text="🍽️ Servi"
+                           style="-fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #0000aa;" />
+                    <Region HBox.hgrow="ALWAYS" />
+                </HBox>
+
+                <TableView fx:id="serviTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn text="ID" prefWidth="40" />
+                        <TableColumn text="Table" prefWidth="50" />
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
+        </SplitPane>
+    </center>
+
+    <bottom>
+        <HBox style="-fx-background-color: #f0f0f0; -fx-padding: 10;" spacing="15">
+            <VBox spacing="5">
+                <Label text="📋 Workflow:" style="-fx-font-weight: bold; -fx-font-size: 11;" />
+                <Label text="⏳ → 🔥 → ✅ → 🍽️"
+                       style="-fx-text-fill: #666666; -fx-font-size: 10;" />
+            </VBox>
+
+            <Region HBox.hgrow="ALWAYS" />
+
+            <Label text="Auto-rafraîchissement: 2 secondes"
+                   style="-fx-text-fill: #666666; -fx-font-size: 10;" />
+        </HBox>
+    </bottom>
+
+</BorderPane>

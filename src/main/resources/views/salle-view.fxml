@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.restaurant.controller.SalleController">
+
+    <top>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <Label text="🪑 Gestion de la Salle" style="-fx-font-size: 18; -fx-font-weight: bold;" />
+            <HBox spacing="20">
+                <VBox spacing="5">
+                    <Label text="Ajouter une table:" style="-fx-font-weight: bold;" />
+                    <HBox spacing="10">
+                        <TextField fx:id="tableNumberField" promptText="Numéro" prefWidth="80" />
+                        <TextField fx:id="tableCapacityField" promptText="Capacité" prefWidth="80" />
+                        <Button text="➕ Ajouter" onAction="#handleAddTable" />
+                    </HBox>
+                </VBox>
+
+                <VBox spacing="5">
+                    <Label fx:id="statusLabel" text="Chargement..." />
+                    <Button text="🔄 Rafraîchir" onAction="#handleRefresh" />
+                </VBox>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <SplitPane dividerPositions="0.7">
+            <!-- GAUCHE: Tables -->
+            <ScrollPane>
+                <GridPane fx:id="tablesGrid" hgap="20" vgap="20"
+                          style="-fx-padding: 20;" alignment="TOP_LEFT" />
+            </ScrollPane>
+
+            <!-- DROITE: Commandes -->
+            <VBox spacing="10" style="-fx-padding: 10;">
+                <Label text="Commandes de la table:" style="-fx-font-weight: bold;" />
+                <ListView fx:id="commandesList" VBox.vgrow="ALWAYS" />
+
+                <Button text="🧹 Libérer Table" onAction="#handleLiberateTable"
+                        style="-fx-background-color: #ffcccc;"/>
+            </VBox>
+        </SplitPane>
+    </center>
+
+    <bottom>
+        <HBox style="-fx-background-color: #f0f0f0; -fx-padding: 5; -fx-spacing: 10;">
+            <Label text="💡 Double-clic sur une table pour créer/voir une commande"
+                   style="-fx-text-fill: #666666;" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label text="Vert=Libre | Rouge=Occupée | Orange=Attente paiement" />
+        </HBox>
+    </bottom>
+
+</BorderPane>

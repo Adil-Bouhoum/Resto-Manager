@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane fx:id="mainBorderPane" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.restaurant.controller.MainController">
+
+    <!-- TOP: Navigation -->
+    <top>
+        <VBox spacing="5">
+            <MenuBar>
+                <Menu text="Fichier">
+                    <MenuItem text="Quitter" onAction="#handleExit" />
+                </Menu>
+            </MenuBar>
+
+            <!-- Boutons de navigation SIMPLES -->
+            <HBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f0f0f0;">
+                <Button text="📋 Carte" onAction="#switchToCarte" />
+                <Button text="🪑 Salle" onAction="#switchToSalle" />
+                <Button text="👨‍🍳 Cuisine" onAction="#switchToCuisine" />
+                <Button text="💰 Caisse" onAction="#switchToCaisse" />
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- CENTER: Contenu dynamique -->
+    <center>
+        <!-- Ici sera chargé le contenu dynamiquement -->
+    </center>
+
+    <!-- BOTTOM: Status -->
+    <bottom>
+        <HBox style="-fx-background-color: #f0f0f0; -fx-padding: 5;">
+            <Label text="RestManager - Gestion Restaurant" style="-fx-text-fill: #666666;" />
+        </HBox>
+    </bottom>
+
+</BorderPane>

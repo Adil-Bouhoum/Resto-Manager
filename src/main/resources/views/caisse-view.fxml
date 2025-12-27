@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.restaurant.controller.CaisseController">
+
+    <top>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <Label text="💰 Caisse - Paiements" style="-fx-font-size: 18; -fx-font-weight: bold;" />
+
+            <HBox spacing="20">
+                <VBox spacing="5">
+                    <Label text="📊 Statistiques du jour:" style="-fx-font-weight: bold;" />
+                    <HBox spacing="15">
+                        <VBox>
+                            <Label text="Ventes totales:" />
+                            <Label fx:id="totalVentesLabel" text="0.00€" style="-fx-font-weight: bold; -fx-font-size: 14;" />
+                        </VBox>
+                        <VBox>
+                            <Label text="Commandes payées:" />
+                            <Label fx:id="commandesPayeesLabel" text="0" style="-fx-font-weight: bold;" />
+                        </VBox>
+                        <VBox>
+                            <Label text="Panier moyen:" />
+                            <Label fx:id="moyennePanierLabel" text="0.00€" />
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <VBox spacing="5">
+                    <Label text="📅 Rapport:" style="-fx-font-weight: bold;" />
+                    <HBox spacing="10">
+                        <DatePicker fx:id="rapportDatePicker" />
+                        <Button text="📋 Générer" onAction="#handleGenerateReport" />
+                        <Button text="🔄 Rafraîchir" onAction="#handleRefresh" />
+                    </HBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <SplitPane dividerPositions="0.3">
+            <!-- GAUCHE: Commandes à payer -->
+            <VBox spacing="10" style="-fx-padding: 10;">
+                <Label text="💳 Commandes à Payer" style="-fx-font-weight: bold;" />
+                <TableView fx:id="commandesAPayerTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn text="ID" prefWidth="50" />
+                        <TableColumn text="Table" prefWidth="60" />
+                        <TableColumn text="Total" prefWidth="80" />
+                    </columns>
+                </TableView>
+                <Button text="👀 Voir détails" onAction="#handleViewCommandeDetails" />
+            </VBox>
+
+            <!-- CENTER: Paiement -->
+            <VBox spacing="15" style="-fx-padding: 15;">
+                <Label text="💶 Paiement" style="-fx-font-weight: bold; -fx-font-size: 14;" />
+
+                <GridPane hgap="10" vgap="10">
+                    <Label text="Total à payer:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                    <Label fx:id="totalAPayerLabel" text="0.00€" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                           style="-fx-font-weight: bold;" />
+
+                    <Label text="Mode de paiement:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                    <ComboBox fx:id="modePaiementCombo" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                              prefWidth="150" />
+
+                    <Label text="Montant reçu:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                    <TextField fx:id="montantField" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                               promptText="0.00" />
+
+                    <Label text="Rendu:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                    <Label fx:id="renduLabel" text="0.00€" GridPane.rowIndex="3" GridPane.columnIndex="1"
+                           style="-fx-font-weight: bold;" />
+                </GridPane>
+
+                <Button text="✅ Enregistrer Paiement" onAction="#handleProcessPayment"
+                        style="-fx-font-size: 14; -fx-padding: 10; -fx-background-color: #ccffcc;"
+                        prefWidth="200" />
+            </VBox>
+
+            <!-- DROITE: Top plats + Commandes payées -->
+            <TabPane>
+                <Tab text="🏆 Top Plats">
+                    <VBox spacing="10" style="-fx-padding: 10;">
+                        <TableView fx:id="topPlatsTable" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn text="Plat" />
+                                <TableColumn text="Quantité" />
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </Tab>
+
+                <Tab text="✅ Commandes Payées">
+                    <VBox spacing="10" style="-fx-padding: 10;">
+                        <TableView fx:id="commandesPayeesTable" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn text="ID" prefWidth="50" />
+                                <TableColumn text="Table" prefWidth="60" />
+                                <TableColumn text="Total" prefWidth="80" />
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </Tab>
+            </TabPane>
+        </SplitPane>
+    </center>
+
+    <bottom>
+        <HBox style="-fx-background-color: #f0f0f0; -fx-padding: 5;">
+            <Label text="💡 Sélectionnez une commande → Choisissez mode paiement → Saisissez montant → Enregistrez"
+                   style="-fx-text-fill: #666666;" />
+        </HBox>
+    </bottom>
+
+</BorderPane>
