@@ -28,10 +28,10 @@ public class CuisineService {
 
     private EntityManager entityManager;
     private CommandeDAO commandeDAO;
-    private final ScheduledExecutorService scheduler;
+    private ScheduledExecutorService scheduler;
     private final ObservableList<Commande> commandesEnAttente;
     private final ObservableList<Commande> commandesEnPreparation;
-    private final ObservableList<Commande> commandesPret;      // ✅ NOUVEAU
+    private final ObservableList<Commande> commandesPret;
     private final ObservableList<Commande> commandesServi;
 
     private static final int REFRESH_INTERVAL = 10; // secondes
@@ -39,11 +39,11 @@ public class CuisineService {
     public CuisineService() {
         this.entityManager = DatabaseConfig.getEntityManager();
         this.commandeDAO = new CommandeDAO(entityManager);
-        this.scheduler = Executors.newScheduledThreadPool(1);
+        this.scheduler = null;
         this.commandesEnAttente = FXCollections.observableArrayList();
         this.commandesEnPreparation = FXCollections.observableArrayList();
-        this.commandesPret = FXCollections.observableArrayList();          // ✅ INIT
-        this.commandesServi = FXCollections.observableArrayList();         // ✅ INIT
+        this.commandesPret = FXCollections.observableArrayList();
+        this.commandesServi = FXCollections.observableArrayList();
     }
 
     /**
@@ -162,14 +162,26 @@ public class CuisineService {
      * Démarre le rafraîchissement automatique (appelé au démarrage de l'écran)
      */
     public void startAutoRefresh() {
-        scheduler.scheduleAtFixedRate(this::refreshAll, 1, REFRESH_INTERVAL, TimeUnit.SECONDS);
+        // ✅ Si scheduler existe et est arrêté, le recréer
+        if (scheduler == null || scheduler.isShutdown()) {
+            System.out.println("[DEBUG] CuisineService - Création nouveau scheduler");
+            scheduler = Executors.newScheduledThreadPool(1);
+        }
+
+        scheduler.scheduleAtFixedRate(
+                this::refreshAll,
+                1,
+                REFRESH_INTERVAL,
+                TimeUnit.SECONDS
+        );
     }
 
     /**
      * Arrête le rafraîchissement (appelé à la fermeture)
      */
     public void stopAutoRefresh() {
-        if (!scheduler.isShutdown()) {
+        if (scheduler != null && !scheduler.isShutdown()) {
+            System.out.println("[DEBUG] CuisineService - Arrêt du scheduler");
             scheduler.shutdownNow();
             try {
                 if (!scheduler.awaitTermination(5, TimeUnit.SECONDS)) {
@@ -188,7 +200,6 @@ public class CuisineService {
 
     private void refreshAll() {
         try {
-            // ✅ Créer un NOUVEL EntityManager pour ce refresh
             EntityManager localEM = DatabaseConfig.getEntityManager();
             try {
                 CommandeDAO localDAO = new CommandeDAO(localEM);
@@ -198,11 +209,6 @@ public class CuisineService {
                 List<Commande> pret = localDAO.findByStatut(StatutCommande.PRET);
                 List<Commande> servi = localDAO.findByStatut(StatutCommande.SERVI);
 
-                System.out.println("[DEBUG refreshAll] Attente: " + attente.size() +
-                        " | Prep: " + preparation.size() +
-                        " | Prêt: " + pret.size() +
-                        " | Servi: " + servi.size());
-
                 Platform.runLater(() -> {
                     commandesEnAttente.setAll(attente);
                     commandesEnPreparation.setAll(preparation);
@@ -210,7 +216,6 @@ public class CuisineService {
                     commandesServi.setAll(servi);
                 });
             } finally {
-                // ✅ Fermer l'EntityManager local
                 if (localEM != null && localEM.isOpen()) {
                     localEM.close();
                 }
